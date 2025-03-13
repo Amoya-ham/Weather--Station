@@ -217,10 +217,7 @@ void setup() {
 
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  // vTaskDelay(1000 / portTICK_PERIOD_MS);
-
-  Serial.println("***************My Weather Station****************");
+  Serial.println("***************My Weather Station Configuration ****************");
   temperature  = dht.readTemperature();
   Serial.print(F("DHT Temperature: "));
   Serial.print(temperature );
@@ -249,7 +246,7 @@ void loop() {
   Serial.println(" hPa");
 
   Serial.print(F("Approx altitude = "));
-  Serial.print(bmp.readAltitude(1013.25)); /* Adjusted to local forecast! */
+  Serial.print(bmp.readAltitude(1013.25)); 
   Serial.println(" m");
 
   Serial.println("************************************************");
@@ -259,19 +256,6 @@ void loop() {
   vTaskDelay(1000 / portTICK_PERIOD_MS);
 }
 
-
-//####################################################################
-//#                          UTIL FUNCTIONS                          #       
-//####################################################################
-// void vButtonCheck( void * pvParameters )  {
-//     configASSERT( ( ( uint32_t ) pvParameters ) == 1 );     
-      
-//     for( ;; ) {
-//         // Add code here to check if a button(S) is pressed
-//         // then execute appropriate function if a button is pressed 
-//         vTaskDelay(200 / portTICK_PERIOD_MS);  
-//     }
-// }
 
 void vUpdate( void * pvParameters )  {
     configASSERT( ( ( uint32_t ) pvParameters ) == 1 );    
@@ -382,7 +366,6 @@ bool publish(const char *topic, const char *payload){
 
 
 
-// //***** Complete the util functions below ******
 
 void display(){
 
@@ -443,7 +426,7 @@ void display(){
 
 
 double HeatIndex(double temperature , double humidity ){
-    // CALCULATE AND RETURN HEAT INDEX USING EQUATION FOUND AT https://byjus.com/heat-index-formula/#:~:text=The%20heat%20index%20formula%20is,an%20implied%20humidity%20of%2020%25
+   
 
   double ft = (temperature  * 9.0/5.0) + 32;
   double H_I = -42.379 + (2.04901523 * ft) + (10.14333127 * humidity ) + (-0.22475541 * ft * humidity) + (-0.00683783 * pow(ft, 2))  + (-0.05481717 * pow(humidity ,2)) + (0.00122874 * pow(ft, 2) * humidity)  + (0.00085282 * ft * pow(humidity ,2)) + (-0.00000199 * pow(ft, 2) * pow(humidity,2));
